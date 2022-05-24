@@ -18,10 +18,16 @@ app.post('/upload', (req, res) => {
         }
     });
     res.send(`File ${diag.name} uploaded`);
+    console.log('File Uploaded:', diag.name)
 })
 
 app.get('/download/:id', (req, res) => {
     res.sendFile(req.params.id, {root: diagDir})
+        if (err) {
+            next(err);
+        } else {
+            console.log('File Downloaded:', req.params.id)
+        }
 })
 
 app.get('/', (req, res) => {
