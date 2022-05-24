@@ -57,22 +57,26 @@ resource "aws_eip" "nat" {
   vpc = true
 }
 
-resource "aws_nat_gateway" "main" {
-  subnet_id     = aws_subnet.public[local.nat_gateway_az].id
-  allocation_id = aws_eip.nat.id
-
-  depends_on = [aws_internet_gateway.main]
-}
-
 resource "aws_route" "public_igw" {
   route_table_id         = aws_route_table.public.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.main.id
 }
 
-resource "aws_route" "private_ngw" {
-  route_table_id         = aws_route_table.private.id
-  destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.main.id
-}
+# =============================================================================
+# I'm cutting deployment of the nat gateway for cost, normally it would be deployed
+# =============================================================================
+
+#resource "aws_nat_gateway" "main" {
+#  subnet_id     = aws_subnet.public[local.nat_gateway_az].id
+#  allocation_id = aws_eip.nat.id
+#
+#  depends_on = [aws_internet_gateway.main]
+#}
+#
+#resource "aws_route" "private_ngw" {
+#  route_table_id         = aws_route_table.private.id
+#  destination_cidr_block = "0.0.0.0/0"
+#  nat_gateway_id         = aws_nat_gateway.main.id
+#}
 

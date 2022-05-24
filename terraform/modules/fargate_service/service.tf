@@ -12,9 +12,9 @@ resource "aws_ecs_service" "service" {
   platform_version = "1.4.0"
 
   network_configuration {
-    assign_public_ip = false
+    assign_public_ip = true
     security_groups  = [aws_security_group.service.id]
-    subnets          = [for subnet in aws_subnet.private : subnet.id]
+    subnets          = [for subnet in aws_subnet.public: subnet.id]
   }
 
   load_balancer {
