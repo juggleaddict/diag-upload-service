@@ -12,7 +12,7 @@ jobs:
       id-token: write
     defaults: 
       run:
-        working_directory: terraform/environments/prod
+        working-directory: terraform/environments/prod
     steps:
       - name: checkout repo
         uses: actions/checkout@v3
