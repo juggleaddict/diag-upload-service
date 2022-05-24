@@ -27,6 +27,10 @@ There were 2 choices here, the app could have auth baked in, but then you'd have
 
 I wanted to put a WAF in front of this app. Previous production environments I have used have not been internet facing, and if they were, the AWS accounts we used were already set up with easy ways to implement a WAF. I opted to put Cloudfront in front of the load balancer and create a token header to establish a trust relationship between them. For the sake of time, I used an existing terraform module to create the waf. To further complicate things, a global WAF is needed for fargate, which can only use a us-east-1 provider. This is largely why this is a separate terraform module. . . lesson learned
 
+### CI/CD
+
+Github Actions is set up to get Authentication and Authorization via OIDC tokens directly via an AWS identity provider, preventing the need to set up an Access keys as secrets in the repo or terraform cloud. 
+
 ### Time Constraints & More Thoughts
 
 Going into this project I had no experience with javascript or Github Actions. In addition to that, I did not have a personal AWS account, nor have a set up a cloud deployment setup via a windows machine. This took a fair amount of time to set up and establish a new account from scratch. I can ponder some ways of making the service enhancements with only aws services, and I would like to explore the pros and cons of this given more time. Are there ways to make the alb non-sticky? Could you filter the AWSALB cookie with cloudfront and effectively remove the sticky sessions to improve autoscaling? You could likely filter requests to only accept .tgz files, and authentication is mentioned above in detail. 
