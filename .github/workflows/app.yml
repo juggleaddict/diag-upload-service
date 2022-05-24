@@ -1,0 +1,24 @@
+name: App test and deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: "arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/${{ secrets.AWS_ROLE }}"
+          aws-region: us-east-2
+
+      - name: refresh ECS tasks
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: aws ecs update-service --cluster diag-upload-service-prod --service diag-upload-service-prod --force-new-deployment 
