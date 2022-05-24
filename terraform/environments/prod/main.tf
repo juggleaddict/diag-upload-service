@@ -16,7 +16,7 @@ module "service" {
 
   service_name = local.service_name
   env          = local.env
-  image        = "billcchung/diag-upload-service:main"
+  image        = "jmullins5421/diag-upload-service:main"
   app_port     = 8000
   vpc_name     = "main"
   waf_arn      = module.waf.waf_arn

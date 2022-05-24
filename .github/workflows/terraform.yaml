@@ -10,9 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
+      pull-requests: write
     defaults: 
       run:
-        working_directory: terraform/environments/prod
+        working-directory: terraform/environments/prod
     steps:
       - name: checkout repo
         uses: actions/checkout@v3
@@ -45,7 +46,7 @@ jobs:
         continue-on-error: true
 
       - name: Update Pull Request
-        uses: actions/github-script@6
+        uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
         env:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
