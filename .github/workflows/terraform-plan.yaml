@@ -1,0 +1,34 @@
+---
+name: Terraform with OIDC
+on: [push]
+jobs:
+  terraform_plan:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+      - name: terraform setup
+        uses: hashicorp/setup-terraform@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/${{ secrets.AWS_ROLE }}
+          aws-region: us-east-2
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check
+        working-directory: terraform
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        working-directory: terraform
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+        working-directory: terraform
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color -input=false
+        working-directory: terraform
