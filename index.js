@@ -12,11 +12,15 @@ app.post('/upload', (req, res) => {
         return res.status(400).send('No files uploaded.');
     }
     let diag = req.files.diag;
-    diag.mv(`${diagDir}/${diag.name}`, function (err) {
-        if (err) {
-            return res.status(500).send(err);
-        }
-    });
+    if (diag.name.endsWith(".tgz")) {
+        diag.mv(`${diagDir}/${diag.name}`, function (err) {
+            if (err) {
+                return res.status(500).send(err);
+            }
+        });
+    } else {
+        return res.status(403).send('Only .tgz files supported')
+    }
     res.send(`File ${diag.name} uploaded`);
     console.log('File Uploaded:', diag.name)
 })
