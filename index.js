@@ -22,12 +22,13 @@ app.post('/upload', (req, res) => {
 })
 
 app.get('/download/:id', (req, res) => {
-    res.sendFile(req.params.id, {root: diagDir})
+    res.sendFile(req.params.id, {root: diagDir}, function (err) {
         if (err) {
-            next(err);
+            res.status(err.status).end();
         } else {
             console.log('File Downloaded:', req.params.id)
         }
+    })
 })
 
 app.get('/', (req, res) => {
