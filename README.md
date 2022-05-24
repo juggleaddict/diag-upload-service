@@ -42,6 +42,6 @@ Going into this project I had no experience with javascript or Github Actions. I
 - `docker run -p 8000:8000 diag-upload-service`
 - if you have [Postman](https://www.postman.com/), there is a collection in `docs/postman` you can import to test with. From there, you can test various deployments by modifying the `{{host}}` variable 
 - There are test files for upload in `docs/postman/testfiles`, of note, the `test_pass.tgz` file simply contains nothing but the test_fail.txt file... cheeky.
-- note that you need to change the form data to *file* before you can select the test files  ![diagram](docs/postman.png)
+- note that you need to change the form data to *file* before you can select the test files  ![diagram](docs/postman.png) and ensure that either 1, your files are in the postman working directory, or 2, you have the option set to allow the use of files outside the working directory.
 
 

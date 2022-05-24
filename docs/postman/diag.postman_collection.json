@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "5e9d28dd-b757-460b-a1ee-667da355ce2a",
-		"name": "diag",
+		"name": "justin-m-diag-upload-service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "10393560"
 	},
@@ -18,8 +18,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://{{host}}",
-					"protocol": "https",
+					"raw": "{{host}}",
 					"host": [
 						"{{host}}"
 					]
@@ -29,6 +28,9 @@
 		},
 		{
 			"name": "upload",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
 			"request": {
 				"method": "POST",
 				"header": [
@@ -42,16 +44,14 @@
 					"mode": "formdata",
 					"formdata": [
 						{
-							"key": "",
+							"key": "diag",
 							"type": "file",
-							"src": "/C:/Users/YOU/projects/diag-upload-service/docs/postman/testfiles/test_fail.txt",
-							"disabled": false
+							"src": "/C:/Users/rocke/projects/diag-upload-service/docs/postman/testfiles/test_fail.txt"
 						}
 					]
 				},
 				"url": {
-					"raw": "https://{{host}}/upload",
-					"protocol": "https",
+					"raw": "{{host}}/upload",
 					"host": [
 						"{{host}}"
 					],
@@ -74,19 +74,13 @@
 					}
 				],
 				"url": {
-					"raw": "https://{{host}}/download?id=1",
-					"protocol": "https",
+					"raw": "{{host}}/download/{{filename}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"download"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "1"
-						}
+						"download",
+						"{{filename}}"
 					]
 				}
 			},
