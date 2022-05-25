@@ -21,7 +21,7 @@ The starting point for this project was a containerized solution, so it seemed n
 
 ### Auth
 
-There were 2 choices here, the app could have auth baked in, but then you'd have to deal with turning it on and off and it could bloat the code. In the end I opted to consider authentication at the load balancer as albs now offer a range of different ways to authenticate. In a production environment, this would likely be SAML, however, for this exercise I simply created unique header with a simple password. The point is that if you set up a solution with infrastructure code, then none of your microservices have to be developed with auth, speeding up dev times. 
+There were 2 choices here, the app could have auth baked in, but then you'd have to deal with turning it on and off for development vs production environments, and it could bloat the code. In the end I opted to consider authentication at the load balancer as albs now offer a range of different ways to authenticate. In a production environment, this would likely be SAML, however, for this exercise I simply created unique header with a simple password. The point is that if you set up a solution with infrastructure code, then none of your microservices have to be developed with auth, speeding up dev times. 
 
 Currently auth is deployed globally on all endpoints, but some type of role-based access is clearly needed. You could also simply block access to the download endpoint at the alb so it can only be accessed internally. 
 
@@ -54,7 +54,7 @@ Going into this project I had no experience with javascript or Github Actions. I
 
 - ensure docker is installed
 - `docker build -t diag-upload-service .`
-- `docker run -p 8000:8000 diag-upload-service`
+- `docker run --rm -it -p 8000:8000 diag-upload-service` 
 - if you have [Postman](https://www.postman.com/), there is a collection in `docs/postman` you can import to test with. From there, you can test various deployments by modifying the `{{host}}` variable 
 - There are test files for upload in `docs/postman/testfiles`, of note, the `test_pass.tgz` file simply contains nothing but the test_fail.txt file... cheeky.
 - note that you need to change the form data to *file* before you can select the test files  ![diagram](docs/postman.png) 

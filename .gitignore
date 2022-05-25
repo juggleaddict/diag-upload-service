@@ -1,5 +1,8 @@
 *meh/
 
+node_modules/
+coverage/
+package-lock.json
 
 # Local .terraform directories
 **/.terraform/*
