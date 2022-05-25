@@ -31,7 +31,7 @@ I wanted to put a WAF in front of this app. Previous production environments I h
 
 ### Observation and metrics
 
-I opted to use the native AWS tools as much as possible, so I went with a custom CloudWatch dashboard. I didn't go wild with this, but it can be heavily modified. A nice sideeffect of doing this is that the dashboard itself is created with terraform as well. 
+I opted to use the native AWS tools as much as possible, so I went with a custom CloudWatch dashboard. I didn't go wild with this, but it can be heavily modified. A nice sideeffect of doing this is that the dashboard itself is created with terraform as well. I think there is a lot more opportunity here for improvement, and I'm not happy with just using the console log in the app, I feel like there is likely a much better way, but didn't have time to explore that. 
 
 ![dashboard](docs/dashboard.png)
 
@@ -43,12 +43,16 @@ Github Actions is set up to get Authentication and Authorization via OIDC tokens
 
 * **Publish Docker image** - this is unchanged
 * **Cleanup Workflow logs** - allows for removing testing actions easily via a workflow dispatch, this is just a utility for this exercise
-* **App test and deploy** - When pushes to the main branch happen, this will refresh tasks and update the service itself. I haven't at the time of writing this added unit tests, but presumably you would have unit and integration tests in here as well that would run on pull requests
+* **App test and deploy** - When pushes to the main branch happen, this will refresh tasks and update the service itself. I added a framework for unit tests, but presumably you would have unit and integration tests in here to fully test. I think this should also have linting for .js, but didn't have time to look into solutions. 
 * **Terraform** - this follows the standard guide for terraform deployments using actions. Plans are run on pull requests and pushes are run on pushes to the main branch. It also puts a comment in pull requests with the plan for easier review of pull requests.
 
-### Time Constraints & More Thoughts
+### Challenges, Time Constraints & More Thoughts
 
 Going into this project I had no experience with javascript or Github Actions. In addition to that, I did not have a personal AWS account, nor have a set up a cloud deployment setup via a windows machine. This took a fair amount of time to set up and establish a new account from scratch. I can ponder some ways of making the service enhancements with only aws services, and I would like to explore the pros and cons of this given more time. Are there ways to make the alb non-sticky? Could you filter the AWSALB cookie with cloudfront and effectively remove the sticky sessions to improve autoscaling? You could likely filter requests to only accept .tgz files, and authentication is mentioned above in detail. 
+
+I'm fairly proud of what I accomplished in an afternoon with the app itself, although it's pretty elementary. Please be kind if you open up index.js, I'm sure there is some knarly workaround, and I'm not entirely sure the test suite is set up correctly, but it does run. I felt like that was a good stopping point as this was quickly becoming an exercise in learning node.js development. 
+
+If you have made it this far, congrats! This was a long winded README with very bad jokes. I swear I don't normally try and add humor to README files.
 
 ## Local Testing (the section formerly known as "Run it")
 

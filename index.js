@@ -1,7 +1,5 @@
 import fileUpload from 'express-fileupload';
 import express from 'express';
-//const fileUpload = require('express-fileupload');
-//const express = require('express')
 
 const app = express();
 const port = 8000;
