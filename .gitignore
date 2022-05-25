@@ -1,5 +1,7 @@
 *meh/
 
+node_modules/
+coverage/
 
 # Local .terraform directories
 **/.terraform/*
